@@ -10,8 +10,15 @@ def is_invalid_id(id:str)->bool:
         return True
     return False
     
-
-
+def is_invalid_id2(id:str)->bool:
+    size = len(id)
+    for pattern_length in range(1,size//2+1):
+        if size%pattern_length==0:
+            pattern = id[:pattern_length]
+            if pattern*(size//pattern_length)==id:
+                return True
+    return False
+ 
 def part1(list_ids)->int:
     res_list = []
     for ids in list_ids:
@@ -19,8 +26,19 @@ def part1(list_ids)->int:
       max = int(ids[1])
       for i in range(min,max+1):
           if is_invalid_id(str(i)):
-              res_list.append(int(i))
+              res_list.append(i)
     return sum(res_list)
+
+def part2(list_ids)->int:
+    res_list=[]
+    for ids in list_ids:
+        min = int(ids[0])
+        max = int(ids[1])
+        for i in range(min,max+1):
+            if is_invalid_id2(str(i)):
+                res_list.append(i)
+    return sum(res_list)
+
 def main():
     splited_text = []  
     with open("input.txt","r") as file:
@@ -31,5 +49,5 @@ def main():
             splited_text.append(line.split("-"))
 
     print(part1(splited_text))
-
+    print(part2(splited_text))
 main()
